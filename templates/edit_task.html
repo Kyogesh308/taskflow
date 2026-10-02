@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit Task</h2>
+<form method="POST" action="{{ url_for('edit_task', task_id=task.id) }}" class="task-form">
+    <div class="form-group">
+        <label for="title">Title <span class="required">*</span></label>
+        <input type="text" id="title" name="title" value="{{ form.get('title', '') }}" maxlength="100">
+        {% if errors.get('title') %}<span class="error">{{ errors['title'] }}</span>{% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" maxlength="500">{{ form.get('description', '') }}</textarea>
+        {% if errors.get('description') %}<span class="error">{{ errors['description'] }}</span>{% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="priority">Priority <span class="required">*</span></label>
+        <select id="priority" name="priority">
+            <option value="Low" {% if form.get('priority') == 'Low' %}selected{% endif %}>Low</option>
+            <option value="Medium" {% if form.get('priority') == 'Medium' %}selected{% endif %}>Medium</option>
+            <option value="High" {% if form.get('priority') == 'High' %}selected{% endif %}>High</option>
+        </select>
+        {% if errors.get('priority') %}<span class="error">{{ errors['priority'] }}</span>{% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="due_date">Due Date <span class="required">*</span></label>
+        <input type="date" id="due_date" name="due_date" value="{{ form.get('due_date', '') }}">
+        {% if errors.get('due_date') %}<span class="error">{{ errors['due_date'] }}</span>{% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="status">Status <span class="required">*</span></label>
+        <select id="status" name="status">
+            <option value="Pending" {% if form.get('status') == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="Completed" {% if form.get('status') == 'Completed' %}selected{% endif %}>Completed</option>
+        </select>
+        {% if errors.get('status') %}<span class="error">{{ errors['status'] }}</span>{% endif %}
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Update Task</button>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-link">Cancel</a>
+    </div>
+</form>
+{% endblock %}
